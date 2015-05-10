@@ -32,6 +32,8 @@ public class LoginController {
 		String loginName = request.getParameter("loginName");
 		String loginPassword = request.getParameter("loginPassword");
 		
+		System.out.println(loginName + loginPassword);
+		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		org.hibernate.Session session = sessionFactory.openSession();
 		
@@ -49,8 +51,8 @@ public class LoginController {
 		session.close();
 		sessionFactory.close();
 		
-		ModelAndView modelandview = new ModelAndView("");
-		
+		ModelAndView modelandview = new ModelAndView("LoginSucceed");
+		modelandview.addObject("loginName", loginName);
 		return modelandview;
 	}
 }

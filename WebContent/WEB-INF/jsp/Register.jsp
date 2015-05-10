@@ -7,9 +7,9 @@
 <title>LibrarySystem</title>
 </head>
 <body>
-<h2>Register</h2>
-</center>
-<form name="input" action="registerDeal" method="post" >
+<h2 align="center">Register</h2>
+
+<form name="input" action="registerDeal" method="post" align="center">
  username: <input type="text" name="userName"/>
  <br />
  password: <input type="password" name="password"/>

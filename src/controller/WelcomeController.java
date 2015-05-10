@@ -19,14 +19,21 @@ public class WelcomeController {
 		return modelandview;
 	}
 	
-	@RequestMapping("/loginSucceed")
-	public ModelAndView welcomeWithLogin(HttpServletRequest request,
+	@RequestMapping("/SearchPage.html")
+	public ModelAndView searchPage(HttpServletRequest request,
 			HttpServletResponse response) {
-		ModelAndView modelandview = new ModelAndView("LoginWelcome");
+		ModelAndView modelandview = new ModelAndView("SearchPage");
 		
 		return modelandview;
 		
 		
+	}
+	
+	@RequestMapping("/LoginPanel")
+	public ModelAndView loginPane() {
+		ModelAndView modelandview = new ModelAndView("LoginPanel");
+		
+		return modelandview;
 	}
 	
 	

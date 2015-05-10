@@ -7,17 +7,24 @@
 <title>LibrarySystem</title>
 </head>
 <body>
-<center>
-<h2>Login</h2>
-</center>
-<form name="input" action="loginDeal" method="post" >
- username: <input type="text" name="loginame"/>
+
+<h2 align="center">Login</h2>
+
+<div style="width:100%;text-align:center"">
+<form name="input" action="loginDeal" method="post"  >
+ username: <input type="text" name="loginName"/>
  <br />
  password: <input type="password" name="loginPassword"/>
  <br/>  
  <input type="submit" value="Submit"/>
 </form>
 
-</center>
+<p>Without account? <br />
+<a href="Register.html">Click here to Register </a>
+</p>
+</div>
+
+
+
 </body>
 </html>

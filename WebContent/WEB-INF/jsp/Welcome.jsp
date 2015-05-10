@@ -6,16 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Welcome to Library</title>
 </head>
-<body>
-<center>
-  <h2>Welcome to Library</h2>
-    <form action="/search.html">
-    Input the book your want to search <br />
-    <input type="text" name="bookname"/> <input type="submit" value="search"/>
-    
-    </form>
-    
-    <a href="Login.html">login</a>
-</center>
-</body>
+
+<frameset rows="40,*">
+    <frame src="LoginPanel"/>
+    <frame src="SearchPage.html" name="SearchContent"/>
+</frameset>
 </html>
