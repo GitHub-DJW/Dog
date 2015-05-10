@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,16 +19,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-	@RequestMapping("/Login.html")
+	@RequestMapping("/login.html")
 	public ModelAndView login(){
-		ModelAndView modelandview = new ModelAndView("Login");
+		ModelAndView modelandview = new ModelAndView("login");
 		
 		return modelandview;
 	}
 	
 	@RequestMapping("/loginDeal")
 	public ModelAndView loginDeal(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException {
 
 		String loginName = request.getParameter("loginName");
 		String loginPassword = request.getParameter("loginPassword");
@@ -42,17 +43,21 @@ public class LoginController {
 		criteria.add(Restrictions.eq("password", loginPassword));
 		
 		List<User> list = criteria.list();
-		
-		for(int i = 0;i < list.size(); i++) {
-			User user = list.get(i);
+/*处理错误		
+		if(list.size() == 0) {
+			response.sendError(1, "UserName or Password rong!");
+		}
+*/			
+			User user = list.get(0);
 			System.out.println(user.getUserName());
 			
-		}
-		session.close();
-		sessionFactory.close();
 		
-		ModelAndView modelandview = new ModelAndView("LoginSucceed");
+		session.close();
+		
+		
+		ModelAndView modelandview = new ModelAndView("loginSucceed");
 		modelandview.addObject("loginName", loginName);
+		modelandview.addObject("loginNo", user.getUserNo());
 		return modelandview;
 	}
 }

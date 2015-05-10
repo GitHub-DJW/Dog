@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RegisterController {
 
-	@RequestMapping("/Register.html")
+	@RequestMapping("/register.html")
 	public ModelAndView register() {
 
 		ModelAndView modelandview = new ModelAndView("register");
@@ -46,10 +46,9 @@ public class RegisterController {
 		
 		session.getTransaction().commit();
 		session.close();
-		sessionFactory.close();
 		
 		
-		ModelAndView modelandview = new ModelAndView("RegisterSucceed");
+		ModelAndView modelandview = new ModelAndView("registerSucceed");
 		
 		return modelandview;
 	}

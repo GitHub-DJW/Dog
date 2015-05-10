@@ -5,8 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body > 
- <p align="right">  <a href="Login.html" target="_top">login</a>
- </p>
+
+
+<body>
+<div style="width:100%;text-align:center">
+    <form action="searchResult.html">
+    Input the book your want to search <br />
+    <input type="text" name="bookName"/> <input type="submit" value="search"/>
+    
+    </form>
+ </div>
 </body>
-</html> 
+</html>

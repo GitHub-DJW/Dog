@@ -6,28 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LibrarySystem</title>
 </head>
-
-<% 
-  
-    if(session.isNew()) {
-	out.println("Please login first");
-	
-   }
-   else {
-	   String loginName = (String)request.getAttribute("loginName");
-	   session.setAttribute("loginName", loginName);
-	  
-   }
-	
-	
-	
-  %>
 <body>
 <center>
-<h2>Login Succeed !<br />
-    Welcome ${loginName}
-</h2>
-<a href="UserInterface.html">Click to the MainPage </a>
+<h2>register Succeed !</h2>
+<a href="login.html">Click to LoginPage </a>
 </center>
 </body>
 </html>

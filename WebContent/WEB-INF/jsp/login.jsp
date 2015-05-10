@@ -20,7 +20,7 @@
 </form>
 
 <p>Without account? <br />
-<a href="Register.html">Click here to Register </a>
+<a href="register.html">Click here to Register </a>
 </p>
 </div>
 

@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<title>Welcome to Library</title>
 </head>
-<body>
-  <a href="SearchPage.html" target="content">SearchPage</a>
-  <a href="BorrowSituation.html" target="content">BorrowSituation</a>
-  <a href="PersonalInformation.html" target="content">PersonalInformation</a>
-</body>
+
+<frameset rows="8%,95%">
+    <frame src="loginPanel"/>
+    <frame src="searchPage.html" name="searchContent"/>
+</frameset>
 </html>

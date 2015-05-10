@@ -4,9 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<title>LibrarySystem</title>
 </head>
-<body>
-
-</body>
+<frameset rows="15%,80%">
+   <frame name="userPanel" src="userPanel.html"/>
+  <frameset cols="20%,80%">
+   <frame name="userIndex" src="userIndex.html"/>
+   <frame name="content" src="searchPage.html"/>
+   
+  </frameset>
+</frameset>
 </html>
