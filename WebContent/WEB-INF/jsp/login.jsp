@@ -10,7 +10,7 @@
 
 <h2 align="center">Login</h2>
 
-<div style="width:100%;text-align:center"">
+<div style="width:100%;text-align:center">
 <form name="input" action="loginDeal" method="post"  >
  username: <input type="text" name="loginName"/>
  <br />

@@ -8,25 +8,18 @@
 </head>
 
 <% 
-  
-    if(session.isNew()) {
-	out.println("Please login first");
-	
-   }
-   else {
+
 	   String loginName = (String)request.getAttribute("loginName");
 	   int loginNo = (int) request.getAttribute("loginNo");
 	   session.setAttribute("loginName", loginName);
 	   session.setAttribute("loginNo", loginNo);
-   }
-	
-	
-	
+	 
   %>
 <body>
 <center>
 <h2>Login Succeed !<br />
     Welcome ${loginName}
+    
 </h2>
 <a href="userInterface.html">Click to the MainPage </a>
 </center>

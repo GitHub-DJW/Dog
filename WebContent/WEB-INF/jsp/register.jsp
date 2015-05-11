@@ -8,13 +8,15 @@
 </head>
 <body>
 <h2 align="center">Register</h2>
-
+<div style="width:100%;text-align:center">
 <form name="input" action="registerDeal" method="post" align="center">
  username: <input type="text" name="userName"/>
  <br />
  password: <input type="password" name="password"/>
  <br/>  
  <input type="submit" value="Submit"/>
+ 
 </form>
+</div>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <title>Welcome to Library</title>
 </head>
 
-<frameset rows="8%,95%">
+<frameset rows="60,*">
     <frame src="loginPanel"/>
     <frame src="searchPage.html" name="searchContent"/>
 </frameset>

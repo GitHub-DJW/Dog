@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Book;
 import model.HibernateUtil;
@@ -29,7 +30,10 @@ public class WelcomeController {
 	
 	@RequestMapping("/searchPage.html")
 	public ModelAndView searchPage(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,HttpSession httpsession) {
+		
+		System.out.println(httpsession.getId());
+		
 		ModelAndView modelandview = new ModelAndView("searchPage");
 		
 		return modelandview;
@@ -40,9 +44,12 @@ public class WelcomeController {
 	@RequestMapping("/searchResult.html")
 	public ModelAndView searchResult(HttpServletRequest request,
 			HttpServletResponse response) {
+		
+		//for test
+		
+		//
 		String bookName = request.getParameter("bookName");
-		
-		
+				
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		org.hibernate.Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Book.class);
@@ -68,8 +75,9 @@ public class WelcomeController {
 	
 	@RequestMapping("/exit.html")
 	public ModelAndView exit(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response, HttpSession session) {
 		
+		session.invalidate();
 		
         ModelAndView modelandview = new ModelAndView("welcome");
 		
