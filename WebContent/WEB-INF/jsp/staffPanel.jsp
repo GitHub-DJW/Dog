@@ -13,8 +13,8 @@
  </p>
  
  <p align="center">  
-    <a href="" target="staffContent">  SearchPage</a>
-    <a href="" target="staffContent">  BorrowSituation</a>
+    <a href="borrowPage.html" target="staffContent">  BoorowPage</a>
+    <a href="addBookPage.html" target="staffContent">  Add Book</a>
     <a href="exit.html" target="_top"> Exit</a>
  </p>
 </body>

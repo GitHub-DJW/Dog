@@ -85,8 +85,8 @@ public class LoginController {
 		Criteria criteria;
 		if(loginType.equals(new String("libraryStaff"))) {
 			criteria = session.createCriteria(Staff.class);
-			criteria.add(Restrictions.eq("userName", loginName));
-			criteria.add(Restrictions.eq("password", loginPassword));
+			criteria.add(Restrictions.eq("staffName", loginName));
+			criteria.add(Restrictions.eq("staffpassword", loginPassword));
 			List<Staff> list = criteria.list();
 		 //错误处理
 			Staff staff = list.get(0);
@@ -98,7 +98,7 @@ public class LoginController {
 		
 		else {
 			criteria = session.createCriteria(SystemManger.class);
-			criteria.add(Restrictions.eq("userName", loginName));
+			criteria.add(Restrictions.eq("systemMangerName", loginName));
 			criteria.add(Restrictions.eq("password", loginPassword));
 			List<SystemManger> list = criteria.list();
 			//错误处理

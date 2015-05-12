@@ -26,8 +26,8 @@ public class Book implements java.io.Serializable {
 	private String author;
 	private String publishers;
 	private String retrievalNo;
-	private String bookNumber;
-	private String remainingBookNumber;
+	private int bookNumber;
+	private int remainingBookNumber;
 	private Set<User> userHasBooks = new HashSet<User>(0);
 
 	public Book() {
@@ -39,8 +39,8 @@ public class Book implements java.io.Serializable {
 	}
 
 	public Book(String bookNo, String bookName, String author,
-			String publishers, String retrievalNo, String bookNumber,
-			String remainingBookNumber, Set userHasBooks) {
+			String publishers, String retrievalNo, int bookNumber,
+			int remainingBookNumber, Set userHasBooks) {
 		this.bookNo = bookNo;
 		this.bookName = bookName;
 		this.author = author;
@@ -99,20 +99,20 @@ public class Book implements java.io.Serializable {
 	}
 
 	@Column(name = "BookNumber", length = 45)
-	public String getBookNumber() {
+	public int getBookNumber() {
 		return this.bookNumber;
 	}
 
-	public void setBookNumber(String bookNumber) {
+	public void setBookNumber(int bookNumber) {
 		this.bookNumber = bookNumber;
 	}
 
 	@Column(name = "RemainingBookNumber", length = 45)
-	public String getRemainingBookNumber() {
+	public int getRemainingBookNumber() {
 		return this.remainingBookNumber;
 	}
 
-	public void setRemainingBookNumber(String remainingBookNumber) {
+	public void setRemainingBookNumber(int remainingBookNumber) {
 		this.remainingBookNumber = remainingBookNumber;
 	}
 
