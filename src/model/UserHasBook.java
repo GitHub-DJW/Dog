@@ -3,12 +3,15 @@ package model;
 // Generated May 9, 2015 4:50:58 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -47,6 +50,7 @@ public class UserHasBook implements java.io.Serializable {
 	@AttributeOverrides({
 			@AttributeOverride(name = "userUserNo", column = @Column(name = "User_UserNo", nullable = false)),
 			@AttributeOverride(name = "bookBookNo", column = @Column(name = "Book_BookNo", nullable = false, length = 10)) })
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public UserHasBookId getId() {
 		return this.id;
 	}

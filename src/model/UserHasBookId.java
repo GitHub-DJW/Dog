@@ -1,6 +1,6 @@
 package model;
 
-// Generated May 9, 2015 4:50:58 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 12, 2015 12:53:28 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -12,12 +12,12 @@ import javax.persistence.Embeddable;
 public class UserHasBookId implements java.io.Serializable {
 
 	private int userUserNo;
-	private String bookBookNo;
+	private int bookBookNo;
 
 	public UserHasBookId() {
 	}
 
-	public UserHasBookId(int userUserNo, String bookBookNo) {
+	public UserHasBookId(int userUserNo, int bookBookNo) {
 		this.userUserNo = userUserNo;
 		this.bookBookNo = bookBookNo;
 	}
@@ -31,12 +31,12 @@ public class UserHasBookId implements java.io.Serializable {
 		this.userUserNo = userUserNo;
 	}
 
-	@Column(name = "Book_BookNo", nullable = false, length = 10)
-	public String getBookBookNo() {
+	@Column(name = "Book_BookNo", nullable = false)
+	public int getBookBookNo() {
 		return this.bookBookNo;
 	}
 
-	public void setBookBookNo(String bookBookNo) {
+	public void setBookBookNo(int bookBookNo) {
 		this.bookBookNo = bookBookNo;
 	}
 
@@ -50,20 +50,14 @@ public class UserHasBookId implements java.io.Serializable {
 		UserHasBookId castOther = (UserHasBookId) other;
 
 		return (this.getUserUserNo() == castOther.getUserUserNo())
-				&& ((this.getBookBookNo() == castOther.getBookBookNo()) || (this
-						.getBookBookNo() != null
-						&& castOther.getBookBookNo() != null && this
-						.getBookBookNo().equals(castOther.getBookBookNo())));
+				&& (this.getBookBookNo() == castOther.getBookBookNo());
 	}
 
 	public int hashCode() {
 		int result = 17;
 
 		result = 37 * result + this.getUserUserNo();
-		result = 37
-				* result
-				+ (getBookBookNo() == null ? 0 : this.getBookBookNo()
-						.hashCode());
+		result = 37 * result + this.getBookBookNo();
 		return result;
 	}
 

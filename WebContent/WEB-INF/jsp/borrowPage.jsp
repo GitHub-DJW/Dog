@@ -7,11 +7,25 @@
 
 </head>
 <body>
-<div style="width:100%;text-align:center ">"
+<div style="width:100%;text-align:center ">
   <form action="borrowDeal">
-  input the bookNo: <input type="text" name="borrowBookNo"/> 
-                    <input type="submit" value="submit"/>
-     
+  <table align="center"> 
+   <tr><th>BookNo</th>
+       <th>UserNo</th>
+   </tr>
+   <tr><td><input type="text" name="borrowBookNo"/> </td>
+       <td><input type="text" name="userNo"/> </td>
+   </tr>
+   <tr><td> <input type="submit" value="submit"/></td>
+   </tr>    
+  </table>
+   <%
+	 String borrowSucceed = (String) request.getAttribute("borrowSucceed");
+	 if(borrowSucceed != null) {
+		 out.println(borrowSucceed);
+	 }
+   %>
+                   
   </form>
   
 </div>

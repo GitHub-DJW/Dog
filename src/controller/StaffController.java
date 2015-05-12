@@ -1,10 +1,18 @@
 package controller;
 
+
+
+
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Book;
 import model.HibernateUtil;
+import model.User;
+import model.UserHasBook;
+import model.UserHasBookId;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -33,16 +41,62 @@ public class StaffController {
 				
 	}
 	
+	@RequestMapping("/borrowPage.html")
+	public ModelAndView borrowPage() {
+		
+		ModelAndView modelandview = new ModelAndView("borrowPage");
+		
+		return modelandview;
+				
+	}
+	
+	@RequestMapping("/borrowDeal")
+	public ModelAndView borrowDeal(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		String bookNoS = (String) request.getParameter("borrowBookNo");
+		String userNoS = (String) request.getParameter("userNo");
+		Date borrowDate = new Date();
+		
+		int bookNo = 0;
+		int userNo = 0;
+		
+		for(int i = 0; i < bookNoS.length(); i++) {
+			bookNo = bookNo * 10 + bookNoS.charAt(i) - '0';	
+		}
+				
+		for(int i = 0; i < userNoS.length(); i++) {
+			userNo = userNo * 10 + userNoS.charAt(i) - '0';	
+		}
+		
+		UserHasBookId userHasBookId = new UserHasBookId(userNo, bookNo);
+		UserHasBook userHasBook = new UserHasBook();
+		userHasBook.setId(userHasBookId); 
+		userHasBook.setBorrowDate(borrowDate);
+		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+	    org.hibernate.Session session = sessionFactory.openSession();
+	    session.beginTransaction();
+		session.save(userHasBook);
+	   
+		String borrowSucceed = new String("Borrow Book Succeed!");
+		session.getTransaction().commit();
+		session.close();
+		ModelAndView modelandview = new ModelAndView("borrowPage");
+		modelandview.addObject("borrowSucceed", borrowSucceed);
+		return modelandview;
+	}
+	
 	
 	@RequestMapping("/addBookDeal")
 	public ModelAndView addBookDeal(HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		String bookName = (String) request.getAttribute("bookName");
-		String author = (String) request.getAttribute("author");
-		String publishers = (String) request.getAttribute("publishers");
-		String retrievalNo = (String) request.getAttribute("retrievalNo");
-		String bookNumberS = (String) request.getAttribute("bookNumber");
+		String bookName = (String) request.getParameter("bookName");
+		String author = (String) request.getParameter("author");
+		String publishers = (String) request.getParameter("publishers");
+		String retrievalNo = (String) request.getParameter("retrievalNo");
+		String bookNumberS = (String) request.getParameter("bookNumber");
 		
 		
 		
@@ -66,9 +120,9 @@ public class StaffController {
         book.setRemainingBookNumber(remainingBookNumber); 
         session.save(book);
         session.close();
-        
+        String addSucceed = new String("Add Book Succeed!");
 		ModelAndView modelandview = new ModelAndView("addBookPage");
-		
+		modelandview.addObject("addSucceed", addSucceed);
 		return modelandview;
 	}
 	

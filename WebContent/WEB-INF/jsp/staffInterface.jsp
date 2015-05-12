@@ -9,7 +9,7 @@
 </head>
 <frameset rows="90,*">
    <frame name="staffPanel" src="staffPanel.html"/>
-   <frame name="staffContent" src=""/>
+   <frame name="staffContent" src="borrowPage.html"/>
 
 </frameset>
 

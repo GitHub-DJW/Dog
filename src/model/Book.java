@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "Book", catalog = "library")
 public class Book implements java.io.Serializable {
 
-	private String bookNo;
+	private int bookNo;
 	private String bookName;
 	private String author;
 	private String publishers;
@@ -33,12 +33,12 @@ public class Book implements java.io.Serializable {
 	public Book() {
 	}
 
-	public Book(String bookNo, String bookName) {
+	public Book(int bookNo, String bookName) {
 		this.bookNo = bookNo;
 		this.bookName = bookName;
 	}
 
-	public Book(String bookNo, String bookName, String author,
+	public Book(int bookNo, String bookName, String author,
 			String publishers, String retrievalNo, int bookNumber,
 			int remainingBookNumber, Set userHasBooks) {
 		this.bookNo = bookNo;
@@ -54,12 +54,12 @@ public class Book implements java.io.Serializable {
 	@Id
 	@Column(name = "BookNo", unique = true, nullable = false, length = 10)
 	@GeneratedValue(strategy = GenerationType.AUTO)  
-	public String getBookNo() {
+	public int getBookNo() {
 		return this.bookNo;
 	}
 
-	public void setBookNo(String bookNo) {
-		this.bookNo = bookNo;
+	public void setBookNo(int bookNo2) {
+		this.bookNo = bookNo2;
 	}
 
 	@Column(name = "BookName", nullable = false, length = 45)

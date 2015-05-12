@@ -24,7 +24,12 @@
     <tr><td><input type="submit" name="Submit"/></td>   
  </table>
  </form>
- 
+ <%
+	 String addSucceed = (String) request.getAttribute("addSucceed");
+	 if(addSucceed != null) {
+		 out.println(addSucceed);
+	 }
+	 %>
 </div>
 </body>
 </html>

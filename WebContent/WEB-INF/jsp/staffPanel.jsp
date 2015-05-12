@@ -13,7 +13,7 @@
  </p>
  
  <p align="center">  
-    <a href="borrowPage.html" target="staffContent">  BoorowPage</a>
+    <a href="borrowPage.html" target="staffContent">  BorrowPage</a>
     <a href="addBookPage.html" target="staffContent">  Add Book</a>
     <a href="exit.html" target="_top"> Exit</a>
  </p>
