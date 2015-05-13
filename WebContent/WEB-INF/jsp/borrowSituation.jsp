@@ -22,7 +22,7 @@
     <th>RemainingBookNumber</th>
   </tr>
 
-<% List<Book> bookList = (List)request.getAttribute("borrowBookList"); 
+<% List<Book> bookList = (List<Book>)request.getAttribute("borrowBookList"); 
    
 for(int i = 0; i < bookList.size(); i++) {
 	   Book book = (Book)bookList.get(i);

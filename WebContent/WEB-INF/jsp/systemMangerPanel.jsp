@@ -13,8 +13,8 @@
  </p>
  
  <p align="center">  
-    <a href="" target="SystemMangerContent">  SearchPage</a>
-    <a href="" target="SystemMangerContent">  BorrowSituation</a>
+    <a href="userManger.html" target="systemMangerContent"> UserManger </a>
+    <a href="staffManger.html" target="systemMangerContent"> StaffManger </a>
     <a href="exit.html" target="_top"> Exit</a>
  </p>
 </body>

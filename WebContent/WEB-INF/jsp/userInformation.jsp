@@ -22,7 +22,7 @@
         <td><%=request.getSession().getAttribute("loginName") %></td>   
     </table>
   
-    <a href="changePassword">change password</a>
+    <a href="userChangePassword.html">change password</a>
   </div>
 </body>
 </html>

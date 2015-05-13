@@ -32,7 +32,6 @@ public class WelcomeController {
 	public ModelAndView searchPage(HttpServletRequest request,
 			HttpServletResponse response,HttpSession httpsession) {
 		
-		System.out.println(httpsession.getId());
 		
 		ModelAndView modelandview = new ModelAndView("searchPage");
 		

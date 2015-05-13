@@ -7,9 +7,10 @@
 
 </head>
 <body>
+<h2 align="center">Borrow Book</h2>
 <div style="width:100%;text-align:center ">
   <form action="borrowDeal">
-  <table align="center"> 
+  <table border="1" align="center"> 
    <tr><th>BookNo</th>
        <th>UserNo</th>
    </tr>

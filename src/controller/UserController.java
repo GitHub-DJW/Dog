@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import model.Book;
 import model.HibernateUtil;
+import model.Staff;
+import model.User;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -38,7 +40,7 @@ public class UserController {
 	public ModelAndView borrowSituation(HttpServletRequest request,
 			HttpServletResponse response, HttpSession httpsession){
         
-		System.out.println(httpsession.getId());
+		
 		
 		
 		
@@ -68,11 +70,11 @@ public class UserController {
 	 public ModelAndView personalInformation(HttpServletRequest request,
 				HttpServletResponse response, HttpSession session){
 		
-		System.out.println(session.getId());
+		
 		
 		System.out.println(session.getAttribute("loginName"));
 		
-		ModelAndView modelandview = new ModelAndView("UserInformation");
+		ModelAndView modelandview = new ModelAndView("userInformation");
 		
 		return modelandview;
 	}
@@ -84,6 +86,55 @@ public class UserController {
 		
 		ModelAndView modelandview = new ModelAndView("userPanel");
 		
+		return modelandview;
+	}
+	
+	@RequestMapping("/userChangePassword.html")
+	public ModelAndView staffChangePassword() {
+		
+		ModelAndView modelandview = new ModelAndView("userChangePassword");
+		
+		return modelandview;
+				
+	}
+	
+	
+	@RequestMapping("/userChangePasswordDeal")
+	public ModelAndView userChangePassword(HttpServletRequest request,
+			HttpServletResponse response, HttpSession httpsession) {
+		String originalPassword = (String) request.getParameter("originalPassword");
+		String newPassword = (String) request.getParameter("newPassword");
+		String confirmPassword = (String) request.getParameter("confirmPassword");
+		String userName = (String) httpsession.getAttribute("loginName");
+		
+		ModelAndView modelandview = new ModelAndView("userChangePassword");
+		if(!confirmPassword.equals(newPassword)){
+			String errorMessage = new String("Two Password isn't equals");
+			modelandview.addObject(errorMessage);
+			return modelandview;
+		}
+		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		org.hibernate.Session session = sessionFactory.openSession();
+		
+		Criteria criteria  = session.createCriteria(User.class);
+		criteria.add(Restrictions.eq("userName", userName));
+		List<User> userList = criteria.list();
+		User user = userList.get(0);
+		
+		if(!user.getPassword().equals(originalPassword)){
+			String errorMessage = new String("Original Password isn't correct");
+			modelandview.addObject(errorMessage);
+			return modelandview;
+		}
+		
+		user.setPassword(newPassword);
+		session.beginTransaction();
+		session.saveOrUpdate(user); 
+		session.getTransaction().commit();
+		session.close();
+		String changeSucceed = new String ("ChangeSucceed");
+		modelandview.addObject(changeSucceed);
 		return modelandview;
 	}
 	

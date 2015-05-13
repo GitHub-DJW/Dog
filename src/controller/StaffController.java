@@ -4,18 +4,22 @@ package controller;
 
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Book;
 import model.HibernateUtil;
+import model.Staff;
 import model.User;
 import model.UserHasBook;
 import model.UserHasBookId;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,6 +49,15 @@ public class StaffController {
 	public ModelAndView borrowPage() {
 		
 		ModelAndView modelandview = new ModelAndView("borrowPage");
+		
+		return modelandview;
+				
+	}
+	
+	@RequestMapping("/ReturnPage.html")
+	public ModelAndView ReturnPage() {
+		
+		ModelAndView modelandview = new ModelAndView("returnPage");
 		
 		return modelandview;
 				
@@ -87,6 +100,43 @@ public class StaffController {
 		return modelandview;
 	}
 	
+	@RequestMapping("/returnDeal")
+	public ModelAndView teturnDeal(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+		String bookNoS = (String) request.getParameter("returnBookNo");
+		String userNoS = (String) request.getParameter("userNo");
+		
+		int bookNo = 0;
+		int userNo = 0;
+		for(int i = 0; i < bookNoS.length(); i++) {
+			bookNo = bookNo * 10 + bookNoS.charAt(i) - '0';	
+		}
+				
+		for(int i = 0; i < userNoS.length(); i++) {
+			userNo = userNo * 10 + userNoS.charAt(i) - '0';	
+		}
+		
+		UserHasBookId userHasBookId = new UserHasBookId(userNo, bookNo);
+		UserHasBook userHasBook = new UserHasBook();
+		userHasBook.setId(userHasBookId); 
+		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+	    org.hibernate.Session session = sessionFactory.openSession();
+	    session.beginTransaction();
+		session.delete(userHasBook);
+		session.getTransaction().commit();
+		session.close();
+		String returnSucceed = new String("Return Book Succeed!");
+		ModelAndView modelandview = new ModelAndView("returnPage");
+		modelandview.addObject("returnSucceed", returnSucceed);
+		return modelandview;
+		}
+		catch(Exception e) {
+			return null;
+		}
+	}
 	
 	@RequestMapping("/addBookDeal")
 	public ModelAndView addBookDeal(HttpServletRequest request,
@@ -126,7 +176,53 @@ public class StaffController {
 		return modelandview;
 	}
 	
+	@RequestMapping("/staffChangePassword.html")
+	public ModelAndView staffChangePassword() {
+		
+		ModelAndView modelandview = new ModelAndView("staffChangePassword");
+		
+		return modelandview;
+				
+	}
 	
 	
+	@RequestMapping("/staffChangePasswordDea")
+	public ModelAndView staffChangePasswordDeal(HttpServletRequest request,
+			HttpServletResponse response, HttpSession httpsession) {
+		String originalPassword = (String) request.getParameter("originalPassword");
+		String newPassword = (String) request.getParameter("newPassword");
+		String confirmPassword = (String) request.getParameter("confirmPassword");
+		String staffName = (String) httpsession.getAttribute("loginName");
+		
+		ModelAndView modelandview = new ModelAndView("staffChangePassword");
+		if(!confirmPassword.equals(newPassword)){
+			String errorMessage = new String("Two Password isn't equals");
+			modelandview.addObject(errorMessage);
+			return modelandview;
+		}
+		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		org.hibernate.Session session = sessionFactory.openSession();
+		
+		Criteria criteria  = session.createCriteria(Staff.class);
+		criteria.add(Restrictions.eq("staffName", staffName));
+		List<Staff> staffList = criteria.list();
+		Staff staff = staffList.get(0);
+		
+		if(!staff.getStaffpassword().equals(originalPassword)){
+			String errorMessage = new String("Original Password isn't correct");
+			modelandview.addObject(errorMessage);
+			return modelandview;
+		}
+		
+		staff.setStaffpassword(newPassword);
+		session.beginTransaction();
+		session.saveOrUpdate(staff); 
+		session.getTransaction().commit();
+		session.close();
+		String changeSucceed = new String ("ChangeSucceed");
+		modelandview.addObject(changeSucceed);
+		return modelandview;
+	}
 	
 }

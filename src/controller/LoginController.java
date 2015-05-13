@@ -16,6 +16,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,12 +32,14 @@ public class LoginController {
 	
 	@RequestMapping("/loginDeal")
 	public ModelAndView loginDeal(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+			HttpServletResponse response) {
 
+		try{
+			
+		
+		
 		String loginName = request.getParameter("loginName");
 		String loginPassword = request.getParameter("loginPassword");
-		
-		System.out.println(loginName + loginPassword);
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		org.hibernate.Session session = sessionFactory.openSession();
@@ -49,15 +52,24 @@ public class LoginController {
 //处理错误		
 		
 			User user = list.get(0);
-			System.out.println(user.getUserName());
+			System.out.println(user.getUserName() + " login in");
 		
 		session.close();
-		
 		
 		ModelAndView modelandview = new ModelAndView("loginSucceed");
 		modelandview.addObject("loginName", loginName);
 		modelandview.addObject("loginNo", user.getUserNo());
 		return modelandview;
+		
+		}
+		catch(Exception e) {
+			ModelAndView modelandview = new ModelAndView("login");
+			String errorMessage = new String("UserName or Password Error");
+			modelandview.addObject("errorMessage", errorMessage);
+			e.printStackTrace();
+			return modelandview;
+		}
+		
 	}
 	
 	@RequestMapping("/loginStaff.html")
@@ -69,16 +81,15 @@ public class LoginController {
 	
 	@RequestMapping("/loginStaffDeal")
 	public ModelAndView loginStaffDeal(HttpServletRequest request,
-			HttpServletResponse response, HttpSession httpsession) throws IOException {
-
+			HttpServletResponse response, HttpSession httpsession) {
 		
 		
+		ModelAndView modelandview = new ModelAndView();
 		String loginName = request.getParameter("loginName");
 		String loginPassword = request.getParameter("loginPassword");
 		String loginType = request.getParameter("loginType");
-		System.out.println(loginName + loginPassword+loginType);
 		
-		ModelAndView modelandview = new ModelAndView();
+		
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		org.hibernate.Session session = sessionFactory.openSession();
@@ -90,7 +101,7 @@ public class LoginController {
 			List<Staff> list = criteria.list();
 		 //错误处理
 			Staff staff = list.get(0);
-		    System.out.println(staff.getStaffName());
+		    System.out.println(staff.getStaffName() +" " +loginType + " login in");
 		    modelandview.setViewName("staffInterface");
 		    httpsession.setAttribute("loginNo", staff.getStaffNo());
 		    
@@ -103,12 +114,13 @@ public class LoginController {
 			List<SystemManger> list = criteria.list();
 			//错误处理
 			SystemManger system = list.get(0);
-			System.out.println(system.getSystemMangerName());
-			modelandview.setViewName("SystemMangerInterface"); 
+			System.out.println(system.getSystemMangerName() +" " +loginType + " login in");
+			modelandview.setViewName("systemMangerInterface"); 
 			httpsession.setAttribute("loginNo", system.getSystemMangerNo());
 		}
 		
-		httpsession.setAttribute("loginName", loginName);
+	
+		httpsession.setAttribute("loginName", loginName);		
 		
 		return modelandview;
 	}
