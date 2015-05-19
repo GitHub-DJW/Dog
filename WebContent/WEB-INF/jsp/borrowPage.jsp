@@ -22,9 +22,17 @@
   </table>
    <%
 	 String borrowSucceed = (String) request.getAttribute("borrowSucceed");
-	 if(borrowSucceed != null) {
-		 out.println(borrowSucceed);
-	 }
+     String errorMessage = (String)request.getAttribute("errorMessage"); 
+   
+     if(borrowSucceed != null) {
+		 %> <p align="center"> <%=borrowSucceed %></p> <% 
+		 
+     }
+
+      if(errorMessage!= null) {
+		    %> <p align="center">  <%=errorMessage %> </p>     
+		  <% 
+		  }  
    %>
                    
   </form>

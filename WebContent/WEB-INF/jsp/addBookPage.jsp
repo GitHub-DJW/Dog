@@ -6,6 +6,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
+<%
+	 String addSucceed = (String) request.getAttribute("addSucceed");
+     String errorMessage = (String)request.getAttribute("errorMessage"); 
+
+     if(addSucceed != null) {
+    	 %> <p align="center">  <%=addSucceed %> </p>     
+		  <%
+	 }
+     
+     if(errorMessage!= null) {
+		    %> <p align="center">  <%=errorMessage %> </p>     
+		  <% 
+		  }  
+%>
+     
+	 
 <div style="width:100%; align-text:center">
  <form action="addBookDeal">
  <table border="1" align="center">
@@ -24,12 +40,7 @@
     <tr><td><input type="submit" name="Submit"/></td>   
  </table>
  </form>
- <%
-	 String addSucceed = (String) request.getAttribute("addSucceed");
-	 if(addSucceed != null) {
-		 out.println(addSucceed);
-	 }
-	 %>
+ 
 </div>
 </body>
 </html>

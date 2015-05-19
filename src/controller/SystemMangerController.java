@@ -70,8 +70,9 @@ public class SystemMangerController {
 	@RequestMapping("/deleteUserDeal")
 	public ModelAndView deleteUserDeal(HttpServletRequest request,
 			HttpServletResponse response) {
-		
+		try {
 		String userName = request.getParameter("userName");
+		ModelAndView modelandview = new ModelAndView("deleteUser");
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		org.hibernate.Session session = sessionFactory.openSession();
@@ -79,6 +80,13 @@ public class SystemMangerController {
 		Criteria criteria = session.createCriteria(User.class);
 		criteria.add(Restrictions.eq("userName", userName));
 		List<User> userList = criteria.list();
+		
+		if(userList.isEmpty()) {
+			String errorMessage = new String("User not exsist");
+			modelandview.addObject(errorMessage);
+			return modelandview;
+		}
+		
 		User user = userList.get(0);
 		
 		session.beginTransaction();
@@ -86,10 +94,17 @@ public class SystemMangerController {
 		session.getTransaction().commit();
 		session.close();
 		
-		ModelAndView modelandview = new ModelAndView("deleteUser");
+		
 		String deleteSucceed = new String("Delete Succeed");
 		modelandview.addObject("deleteSucceed", deleteSucceed);
 		return modelandview;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			String errorMessage = new String("The user still have some books not return ! can't not delete");
+			ModelAndView modelandview = new ModelAndView("deleteUser");
+			return modelandview;
+		}
 	}
 	
 	
@@ -130,12 +145,12 @@ public class SystemMangerController {
 	@RequestMapping("/addStaffDeal")
 	public ModelAndView addStaff(HttpServletRequest request,
 			HttpServletResponse response) {
-		
+		try {
 		String staffName = request.getParameter("staffName");
 		String password = new String("000000");
 		Staff staff = new Staff();
 		staff.setStaffName(staffName);
-		staff.setStaffpassword(password); 
+		staff.setPassword(password); 
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		org.hibernate.Session session = sessionFactory.openSession();
@@ -147,6 +162,13 @@ public class SystemMangerController {
 		String addSucceed = new String("Add Succeed");
 		modelandview.addObject("addSucceed", addSucceed);
 		return modelandview;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			String errorMessage = new String("The user still have some books not return ! can't not delete");
+			ModelAndView modelandview = new ModelAndView("addStaff");
+			return modelandview;
+		}
 	}
 	
 	
@@ -160,8 +182,9 @@ public class SystemMangerController {
 	@RequestMapping("/deleteStaffDeal")
 	public ModelAndView deleteStaffDeal(HttpServletRequest request,
 			HttpServletResponse response) {
-		
+		try {
 		String staffName = request.getParameter("staffName");
+		ModelAndView modelandview = new ModelAndView("deleteStaff");
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		org.hibernate.Session session = sessionFactory.openSession();
@@ -169,15 +192,29 @@ public class SystemMangerController {
 		Criteria criteria = session.createCriteria(Staff.class);
 		criteria.add(Restrictions.eq("staffName", staffName));
 		List<Staff> staffList = criteria.list();
-		Staff staff = staffList.get(0);
+		
+		if(staffList.isEmpty()) {
+			String errorMessage = new String("staff not exsist !");
+			modelandview.addObject("errorMessage", errorMessage);
+			return modelandview;
+		}
+		
+		Staff staff = staffList.get(0);		
 		session.beginTransaction();
 		session.delete(staff);
 		session.getTransaction().commit();
 		session.close();
-		ModelAndView modelandview = new ModelAndView("deleteStaff");
+		
 		String deleteSucceed = new String("Delete Succeed");
 		modelandview.addObject("deleteSucceed", deleteSucceed);
 		return modelandview;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			String errorMessage = new String("Delete Fail!");
+			ModelAndView modelandview = new ModelAndView("deleteStaff");
+			return modelandview;
+		}
 	}
 	
 }

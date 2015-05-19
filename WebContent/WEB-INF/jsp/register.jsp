@@ -8,12 +8,23 @@
 </head>
 <body>
 <h2 align="center">Register</h2>
+<% String errorMessage = (String)request.getAttribute("errorMessage"); 
+
+  if(errorMessage!= null) {
+     %> <p align="center">  <%=errorMessage %> </p> 
+     
+     <% 
+  }  
+	  
+	 %>
+
 <div style="width:100%;text-align:center">
 <form name="input" action="registerDeal" method="post" align="center">
  username: <input type="text" name="userName"/>
  <br />
  password: <input type="password" name="password"/>
  <br/>  
+ confirmpassword: <input type="password" name="confirmPassword"/>
  <input type="submit" value="Submit"/>
  
 </form>

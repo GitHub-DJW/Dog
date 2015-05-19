@@ -44,18 +44,14 @@ public class WelcomeController {
 	public ModelAndView searchResult(HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		//for test
 		
-		//
 		String bookName = request.getParameter("bookName");
 				
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		org.hibernate.Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Book.class);
 		criteria.add(Restrictions.like("bookName", "%" + bookName + "%"));
-		List<Book> bookList = criteria.list();
-		
-		
+		List<Book> bookList = criteria.list();				
 		session.close();
 		
 		ModelAndView modelandview = new ModelAndView("searchResult");

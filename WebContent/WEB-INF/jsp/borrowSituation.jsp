@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>  
 <%@page import="java.util.List"%>
 <%@page import="model.Book" %>
- 
+<%@page import="java.util.Date" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,29 +14,35 @@
  
 <div style="width:100%;text-align:center">
 <table border="1" align="center">
-  <tr><th>BookName</th> 
+  <tr>
+    <th>BookNo</th>   
+    <th>BookName</th> 
     <th>Author</th> 
     <th>Publishers</th>
-    <th>RetrievalNo</th> 
-    <th>BookNumber</th> 
-    <th>RemainingBookNumber</th>
+    <th>BorrowDate</th> 
+    <th>RemainDay</th>
+    
   </tr>
 
-<% List<Book> bookList = (List<Book>)request.getAttribute("borrowBookList"); 
+<% List<Object[]> borrowBookList = (List<Object[]>)request.getAttribute("borrowBookList"); 
    
-for(int i = 0; i < bookList.size(); i++) {
-	   Book book = (Book)bookList.get(i);
-	   %>
-	    
-	       <tr><td><%=book.getBookName()%></td>
-	           <td><%=book.getAuthor()%>  </td>
-	           <td><%=book.getPublishers() %></td>
-	           <td><%=book.getRetrievalNo() %></td>
-	           <td><%=book.getBookNumber() %></td>
-	           <td><%=book.getRemainingBookNumber() %></td>
-	       </tr>
-	    
-   
+   Date today = new Date();
+  
+
+   for(Object[] obj :borrowBookList)    
+    { 
+    	Date borrowDate = (Date) obj[4];
+		long useDay = today.getTime() / 86400000 - borrowDate.getTime() / 86400000;
+    
+     %>
+	   <tr>
+	           <td><%=obj[0] %></td>
+	           <td><%=obj[1] %></td>
+	           <td><%=obj[2] %></td>
+	           <td><%=obj[3] %></td>
+	           <td><%=obj[4] %></td>
+	           <td><%=60 - useDay %></td>
+	   </tr>
 	   <% 
    }
 

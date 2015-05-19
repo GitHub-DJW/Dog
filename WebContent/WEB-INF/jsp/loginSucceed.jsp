@@ -7,19 +7,11 @@
 <title>LibrarySystem</title>
 </head>
 
-<% 
-
-	   String loginName = (String)request.getAttribute("loginName");
-	   int loginNo = (int) request.getAttribute("loginNo");
-	   session.setAttribute("loginName", loginName);
-	   session.setAttribute("loginNo", loginNo);
-	 
-  %>
 <body>
 <center>
 <h2>Login Succeed !<br />
-    Welcome ${loginName}
-    
+    Welcome <%=session.getAttribute("loginName") %>
+     
 </h2>
 <a href="userInterface.html">Click to the MainPage </a>
 </center>

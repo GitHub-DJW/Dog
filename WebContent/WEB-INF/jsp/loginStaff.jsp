@@ -8,14 +8,22 @@
 </head>
 <body>
 <h2 align="center">Login</h2>
+<% String errorMessage = (String)request.getAttribute("errorMessage"); 
 
+  if(errorMessage!= null) {
+     %> <p align="center">  <%=errorMessage %> </p> 
+     
+     <% 
+  }  
+	  
+	 %>
 <div style="width:100%;text-align:center">
 <form name="input" action="loginStaffDeal" method="post"  >
  username: <input type="text" name="loginName"/>
  <br />
  password: <input type="password" name="loginPassword"/>
  <br/>  
- libraryStaff <input type="radio" name="loginType" value="libraryStaff" /> 
+ libraryStaff <input type="radio" name="loginType" value="libraryStaff" checked="checked"/> 
 
  systemManger <input type="radio" name="loginType" value="systemManger"/>
  <input type="submit" value="Submit"/>

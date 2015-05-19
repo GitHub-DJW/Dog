@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,9 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Book;
+import model.BorrowBook;
 import model.HibernateUtil;
 import model.Staff;
 import model.User;
+import model.UserHasBook;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -39,30 +42,25 @@ public class UserController {
 	@RequestMapping("/borrowSituation.html")
 	public ModelAndView borrowSituation(HttpServletRequest request,
 			HttpServletResponse response, HttpSession httpsession){
-        
-		
-		
-		
 		
 		int loginNo = (int) request.getSession().getAttribute("loginNo");
-		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		org.hibernate.Session session = sessionFactory.openSession();
-
-		String sql = "SELECT BookNo, BookName, Author, Publishers, RetrievalNo,BookNumber, RemainingBookNumber " + 
+			
+		String sql = "SELECT BookNo, BookName, Author, Publishers,BorrowDate " + 
 		          " FROM Book, User_has_Book "
 		          + "WHERE BookNo = Book_BookNo and User_UserNo = " + loginNo + ";";
 		
 	
-	    Query query =	session.createSQLQuery(sql).addEntity(Book.class); 
+	    Query query =	session.createSQLQuery(sql);	    
+		List<Object[]> borrowBookList = query.list();		  
 		
-
-		List<Book> bookList = query.list();		
+		
 		
 		session.close(); 
 		
 		ModelAndView modelandview = new ModelAndView("borrowSituation");
-		modelandview.addObject("borrowBookList", bookList);
+		modelandview.addObject("borrowBookList", borrowBookList);
 		return modelandview;
 	}
 	
@@ -70,21 +68,15 @@ public class UserController {
 	 public ModelAndView personalInformation(HttpServletRequest request,
 				HttpServletResponse response, HttpSession session){
 		
-		
-		
-		System.out.println(session.getAttribute("loginName"));
-		
-		ModelAndView modelandview = new ModelAndView("userInformation");
-		
+		System.out.println(session.getAttribute("loginName"));	
+		ModelAndView modelandview = new ModelAndView("userInformation");		
 		return modelandview;
 	}
 	
 	@RequestMapping("/userPanel.html") 
 	 public ModelAndView userPanel(HttpServletRequest request,
 				HttpServletResponse response){
-		
-		
-		ModelAndView modelandview = new ModelAndView("userPanel");
+	    ModelAndView modelandview = new ModelAndView("userPanel");
 		
 		return modelandview;
 	}
@@ -102,6 +94,7 @@ public class UserController {
 	@RequestMapping("/userChangePasswordDeal")
 	public ModelAndView userChangePassword(HttpServletRequest request,
 			HttpServletResponse response, HttpSession httpsession) {
+		try {
 		String originalPassword = (String) request.getParameter("originalPassword");
 		String newPassword = (String) request.getParameter("newPassword");
 		String confirmPassword = (String) request.getParameter("confirmPassword");
@@ -110,7 +103,7 @@ public class UserController {
 		ModelAndView modelandview = new ModelAndView("userChangePassword");
 		if(!confirmPassword.equals(newPassword)){
 			String errorMessage = new String("Two Password isn't equals");
-			modelandview.addObject(errorMessage);
+			modelandview.addObject("errorMessage",errorMessage);
 			return modelandview;
 		}
 		
@@ -124,7 +117,7 @@ public class UserController {
 		
 		if(!user.getPassword().equals(originalPassword)){
 			String errorMessage = new String("Original Password isn't correct");
-			modelandview.addObject(errorMessage);
+			modelandview.addObject("errorMessage",errorMessage);
 			return modelandview;
 		}
 		
@@ -133,9 +126,17 @@ public class UserController {
 		session.saveOrUpdate(user); 
 		session.getTransaction().commit();
 		session.close();
-		String changeSucceed = new String ("ChangeSucceed");
-		modelandview.addObject(changeSucceed);
+		String changeSucceed = new String ("Change Password Succeed !");
+		modelandview.addObject("changeSucceed",changeSucceed);
 		return modelandview;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			String errorMessage = new String("Change Password Fail !");
+			ModelAndView modelandview = new ModelAndView("userChangePassword");
+			modelandview.addObject("errorMessage", errorMessage);
+			return modelandview;
+		}
 	}
 	
 }

@@ -4,9 +4,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
+<%
+	 String deleteSucceed = (String) request.getAttribute("deleteSucceed");
+     String errorMessage = (String)request.getAttribute("errorMessage"); 
+     if(deleteSucceed != null) {
+		 %><p align="center"><%=deleteSucceed%></p>  <%
+	 }
+	 
+	 if(errorMessage!= null) {
+		    %> <p align="center">  <%=errorMessage %> </p>     
+		  <% 
+		  }  
+%>
   <div style="width:100%; align-text:center">
  <form action="deleteUserDeal">
  <table border="1" align="center">
@@ -19,12 +30,7 @@
     <tr><td><input type="submit" name="Submit" value="Delete"/></td>   
  </table>
  </form>
- <%
-	 String deleteSucceed = (String) request.getAttribute("deleteSucceed");
-	 if(deleteSucceed != null) {
-		 out.println(deleteSucceed);
-	 }
-	 %>
+ 
 </div>
 </body>
 </html>

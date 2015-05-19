@@ -6,26 +6,35 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
- <% String errorMessage = (String) request.getAttribute("errorMessage");
+ 
+<div style="width:100%;text-aglin:center">
+<form action="staffChangePasswordDeal">
+<table align="center">
+   <tr><td>original password</td>
+       <td><input type="password" name="originalPassword"/> </td>
+   </tr>
+   <tr><td>New Password</td>
+       <td><input type="password" name="newPassword"/></td>
+   </tr>    
+   <tr><td>confirm Password</td>
+   <td><input type="password" name="confirmPassword"/></td>
+   </tr>
+   <tr><td><input type="submit" value="Submit"/></td>
+   </tr>
+</table>
+</form>
+<% String errorMessage = (String) request.getAttribute("errorMessage");
     String changeSucceed = (String) request.getAttribute("changeSucceed");
     if(errorMessage != null) {
     	%> <p align="center"><%=errorMessage %> </p>     <% 
     }
  
     if(changeSucceed != null) {
-    	%> <p align="center"><%=errorMessage %> </p>     <% 
+    	%> <p align="center"><%=changeSucceed %> </p>     <% 
     }
  
  %>
-<div style="width:100%;text-aglin:center">
-<form action="staffChangePasswordDeal">
-<ul>
-   <li>original password：<input type="text" name="originalPassword"/> </li>
-   <li>New Password：<input type="text" name="newPassword"/></li>
-   <li>confirm Password<input type="text" name="confirmPassword"/></li>
-   <li><input type="submit" value="Submit"/>
-</ul>
-</form>
+
 </div>
 </body>
 </html>

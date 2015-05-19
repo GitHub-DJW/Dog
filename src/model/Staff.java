@@ -18,7 +18,7 @@ public class Staff implements java.io.Serializable {
 
 	private int staffNo;
 	private String staffName;
-	private String staffpassword;
+	private String password;
 
 	public Staff() {
 	}
@@ -26,7 +26,7 @@ public class Staff implements java.io.Serializable {
 	public Staff(int staffNo, String staffName, String staffpassword) {
 		this.staffNo = staffNo;
 		this.staffName = staffName;
-		this.staffpassword = staffpassword;
+		this.password = staffpassword;
 	}
 
 	@Id
@@ -40,7 +40,7 @@ public class Staff implements java.io.Serializable {
 		this.staffNo = staffNo;
 	}
 
-	@Column(name = "StaffName", nullable = false, length = 45)
+	@Column(name = "StaffName", unique = true, nullable = false, length = 45)
 	public String getStaffName() {
 		return this.staffName;
 	}
@@ -49,13 +49,13 @@ public class Staff implements java.io.Serializable {
 		this.staffName = staffName;
 	}
 
-	@Column(name = "Staffpassword", nullable = false, length = 10)
-	public String getStaffpassword() {
-		return this.staffpassword;
+	@Column(name = "Password", nullable = false, length = 10)
+	public String getPassword() {
+		return this.password;
 	}
 
-	public void setStaffpassword(String staffpassword) {
-		this.staffpassword = staffpassword;
+	public void setPassword(String staffpassword) {
+		this.password = staffpassword;
 	}
 
 }

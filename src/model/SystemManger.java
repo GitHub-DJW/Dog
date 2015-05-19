@@ -41,7 +41,7 @@ public class SystemManger implements java.io.Serializable {
 		this.systemMangerNo = systemMangerNo;
 	}
 
-	@Column(name = "SystemMangerName", nullable = false, length = 45)
+	@Column(name = "SystemMangerName", unique = true,nullable = false, length = 45)
 	public String getSystemMangerName() {
 		return this.systemMangerName;
 	}

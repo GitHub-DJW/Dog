@@ -54,7 +54,7 @@ public class StaffController {
 				
 	}
 	
-	@RequestMapping("/ReturnPage.html")
+	@RequestMapping("/returnPage.html")
 	public ModelAndView ReturnPage() {
 		
 		ModelAndView modelandview = new ModelAndView("returnPage");
@@ -66,7 +66,7 @@ public class StaffController {
 	@RequestMapping("/borrowDeal")
 	public ModelAndView borrowDeal(HttpServletRequest request,
 			HttpServletResponse response) {
-		
+		try {
 		String bookNoS = (String) request.getParameter("borrowBookNo");
 		String userNoS = (String) request.getParameter("userNo");
 		Date borrowDate = new Date();
@@ -98,6 +98,14 @@ public class StaffController {
 		ModelAndView modelandview = new ModelAndView("borrowPage");
 		modelandview.addObject("borrowSucceed", borrowSucceed);
 		return modelandview;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			String errorMessage = new String("Borrow Book Fail!");
+			ModelAndView modelandview = new ModelAndView("borrowPage");
+			modelandview.addObject("errorMessage", errorMessage);
+			return modelandview;
+		}
 	}
 	
 	@RequestMapping("/returnDeal")
@@ -134,14 +142,18 @@ public class StaffController {
 		return modelandview;
 		}
 		catch(Exception e) {
-			return null;
+			e.printStackTrace();
+			String errorMessage = new String("Return Book Fail!");
+			ModelAndView modelandview = new ModelAndView("returnPage");
+			modelandview.addObject("errorMessage", errorMessage);
+			return modelandview;
 		}
 	}
 	
 	@RequestMapping("/addBookDeal")
 	public ModelAndView addBookDeal(HttpServletRequest request,
 			HttpServletResponse response) {
-		
+		try {
 		String bookName = (String) request.getParameter("bookName");
 		String author = (String) request.getParameter("author");
 		String publishers = (String) request.getParameter("publishers");
@@ -174,6 +186,14 @@ public class StaffController {
 		ModelAndView modelandview = new ModelAndView("addBookPage");
 		modelandview.addObject("addSucceed", addSucceed);
 		return modelandview;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			String errorMessage = new String("Add Book Fail!");
+			ModelAndView modelandview = new ModelAndView("addBookPage");
+			modelandview.addObject("errorMessage", errorMessage);
+			return modelandview;
+		}
 	}
 	
 	@RequestMapping("/staffChangePassword.html")
@@ -186,9 +206,10 @@ public class StaffController {
 	}
 	
 	
-	@RequestMapping("/staffChangePasswordDea")
+	@RequestMapping("/staffChangePasswordDeal")
 	public ModelAndView staffChangePasswordDeal(HttpServletRequest request,
 			HttpServletResponse response, HttpSession httpsession) {
+		try {
 		String originalPassword = (String) request.getParameter("originalPassword");
 		String newPassword = (String) request.getParameter("newPassword");
 		String confirmPassword = (String) request.getParameter("confirmPassword");
@@ -196,8 +217,8 @@ public class StaffController {
 		
 		ModelAndView modelandview = new ModelAndView("staffChangePassword");
 		if(!confirmPassword.equals(newPassword)){
-			String errorMessage = new String("Two Password isn't equals");
-			modelandview.addObject(errorMessage);
+			String errorMessage = new String("Two Passwords isn't equals");
+			modelandview.addObject("errorMessage",errorMessage);
 			return modelandview;
 		}
 		
@@ -209,20 +230,29 @@ public class StaffController {
 		List<Staff> staffList = criteria.list();
 		Staff staff = staffList.get(0);
 		
-		if(!staff.getStaffpassword().equals(originalPassword)){
+		if(!staff.getPassword().equals(originalPassword)){
 			String errorMessage = new String("Original Password isn't correct");
-			modelandview.addObject(errorMessage);
+			modelandview.addObject("errorMessage",errorMessage);
 			return modelandview;
 		}
 		
-		staff.setStaffpassword(newPassword);
+		staff.setPassword(newPassword);
 		session.beginTransaction();
 		session.saveOrUpdate(staff); 
 		session.getTransaction().commit();
 		session.close();
 		String changeSucceed = new String ("ChangeSucceed");
-		modelandview.addObject(changeSucceed);
+		modelandview.addObject("changeSucceed",changeSucceed);
 		return modelandview;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			String errorMessage = new String("UnKnow Error ! /n"
+					+ "Please find the SystemManger");
+			ModelAndView modelandview = new ModelAndView("staffChangePassword");
+			modelandview.addObject("errorMessage", errorMessage);
+			return modelandview;
+		}
 	}
 	
 }

@@ -21,10 +21,18 @@
   </table>
    <%
 	 String returnSucceed = (String) request.getAttribute("returnSucceed");
+     String errorMessage = (String)request.getAttribute("errorMessage"); 
 	 if(returnSucceed != null) {
-		 out.println(returnSucceed);
+		 %> <p align="center">  <%=returnSucceed %> </p>     
+		  <% 
 	 }
-   %>
+	 
+	 if(errorMessage!= null) {
+		    %> <p align="center">  <%=errorMessage %> </p>     
+		  <% 
+		  }  
+    %>
+   
                    
   </form>
   

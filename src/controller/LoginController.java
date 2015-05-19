@@ -30,45 +30,64 @@ public class LoginController {
 		return modelandview;
 	}
 	
+	
+	@RequestMapping("/askforlogin.html")
+	public ModelAndView askForLogin(){
+		ModelAndView modelandview = new ModelAndView("askforlogin");
+		
+		return modelandview;
+	}
+	
+	
+	
 	@RequestMapping("/loginDeal")
 	public ModelAndView loginDeal(HttpServletRequest request,
-			HttpServletResponse response) {
-
-		try{
-			
-		
-		
+			HttpServletResponse response, HttpSession httpsession) {	
+		try {
 		String loginName = request.getParameter("loginName");
-		String loginPassword = request.getParameter("loginPassword");
-		
+		String loginPassword = request.getParameter("loginPassword");	
+	    
+		ModelAndView modelandview = new ModelAndView();
+		String errorMessage ;
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		org.hibernate.Session session = sessionFactory.openSession();
-		
-		Criteria criteria = session.createCriteria(User.class);
+	    org.hibernate.Session session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(User.class); 
 		criteria.add(Restrictions.eq("userName", loginName));
+		
+		if(criteria.list().isEmpty()) {
+			errorMessage = new String("UserName not find!");
+			modelandview.addObject("errorMessage",errorMessage);
+			modelandview.setViewName("login"); 
+			return modelandview;
+		}	
 		criteria.add(Restrictions.eq("password", loginPassword));
 		
-		List<User> list = criteria.list();
-//处理错误		
-		
-			User user = list.get(0);
-			System.out.println(user.getUserName() + " login in");
-		
-		session.close();
-		
-		ModelAndView modelandview = new ModelAndView("loginSucceed");
-		modelandview.addObject("loginName", loginName);
-		modelandview.addObject("loginNo", user.getUserNo());
-		return modelandview;
-		
-		}
-		catch(Exception e) {
-			ModelAndView modelandview = new ModelAndView("login");
-			String errorMessage = new String("UserName or Password Error");
-			modelandview.addObject("errorMessage", errorMessage);
-			e.printStackTrace();
+		if(criteria.list().isEmpty()) {
+			errorMessage = new String("Password isn't correct!");
+			modelandview.addObject("errorMessage",errorMessage);
+			modelandview.setViewName("login");
 			return modelandview;
 		}
+	
+		User user = (User) criteria.list().get(0); 
+				
+		session.close();    
+		System.out.println(user.getUserName() + " login in");
+		
+		httpsession.setAttribute("loginName", loginName);
+		httpsession.setAttribute("loginNo", user.getUserNo());
+		modelandview.setViewName("loginSucceed"); 
+		return modelandview;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			String errorMessage = new String("UnKnow Error ! /n"
+					+ "Please find the SystemManger");
+			ModelAndView modelandview = new ModelAndView("login");
+			modelandview.addObject("errorMessage", errorMessage);
+			return modelandview;
+		}
+		
 		
 	}
 	
@@ -82,25 +101,42 @@ public class LoginController {
 	@RequestMapping("/loginStaffDeal")
 	public ModelAndView loginStaffDeal(HttpServletRequest request,
 			HttpServletResponse response, HttpSession httpsession) {
-		
-		
-		ModelAndView modelandview = new ModelAndView();
+	    try {
+	
 		String loginName = request.getParameter("loginName");
 		String loginPassword = request.getParameter("loginPassword");
 		String loginType = request.getParameter("loginType");
 		
-		
+		ModelAndView modelandview = new ModelAndView();
+		String errorMessage;
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		org.hibernate.Session session = sessionFactory.openSession();
 		Criteria criteria;
+		
+		
 		if(loginType.equals(new String("libraryStaff"))) {
 			criteria = session.createCriteria(Staff.class);
 			criteria.add(Restrictions.eq("staffName", loginName));
-			criteria.add(Restrictions.eq("staffpassword", loginPassword));
-			List<Staff> list = criteria.list();
-		 //错误处理
-			Staff staff = list.get(0);
+			
+			if(criteria.list().isEmpty()) {
+				errorMessage = new String("StaffName not find!");
+				modelandview.addObject("errorMessage",errorMessage);
+				modelandview.setViewName("loginStaff");
+				return modelandview;
+			}	 
+			
+			criteria.add(Restrictions.eq("password", loginPassword));
+			
+			if(criteria.list().isEmpty()) {
+				errorMessage = new String("Password isn't correct!");
+				modelandview.addObject("errorMessage",errorMessage);
+				modelandview.setViewName("loginStaff");
+				return modelandview;
+			}
+			
+
+			Staff staff = (Staff) criteria.list().get(0);
 		    System.out.println(staff.getStaffName() +" " +loginType + " login in");
 		    modelandview.setViewName("staffInterface");
 		    httpsession.setAttribute("loginNo", staff.getStaffNo());
@@ -110,10 +146,26 @@ public class LoginController {
 		else {
 			criteria = session.createCriteria(SystemManger.class);
 			criteria.add(Restrictions.eq("systemMangerName", loginName));
+			
+			if(criteria.list().isEmpty()) {
+				errorMessage = new String("SystemMangerName not find!");
+				modelandview.addObject("errorMessage",errorMessage);
+				modelandview.setViewName("loginStaff");
+				return modelandview;
+			}	
+			
+			
 			criteria.add(Restrictions.eq("password", loginPassword));
-			List<SystemManger> list = criteria.list();
-			//错误处理
-			SystemManger system = list.get(0);
+			
+			if(criteria.list().isEmpty()) {
+				errorMessage = new String("Password isn't correct!");
+				modelandview.addObject("errorMessage",errorMessage);
+				modelandview.setViewName("loginStaff");
+				return modelandview;
+			}
+			
+		
+			SystemManger system = (SystemManger) criteria.list().get(0);
 			System.out.println(system.getSystemMangerName() +" " +loginType + " login in");
 			modelandview.setViewName("systemMangerInterface"); 
 			httpsession.setAttribute("loginNo", system.getSystemMangerNo());
@@ -123,5 +175,15 @@ public class LoginController {
 		httpsession.setAttribute("loginName", loginName);		
 		
 		return modelandview;
-	}
+	    }
+	    catch(Exception e) {
+	    	e.printStackTrace();
+			String errorMessage = new String("UnKnow Error ! /n"
+					+ "Please find the SystemManger");
+			ModelAndView modelandview = new ModelAndView("loginStaff");
+			modelandview.addObject("errorMessage", errorMessage);
+			return modelandview;
+	    }
+	  }
+	    
 }
