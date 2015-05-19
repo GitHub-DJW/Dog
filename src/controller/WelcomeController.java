@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class WelcomeController {
 
 	
-	@RequestMapping("/")
+	@RequestMapping("/mainPage.html")
 	public ModelAndView welcomeWithOutLogin(HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView modelandview = new ModelAndView("welcome");
