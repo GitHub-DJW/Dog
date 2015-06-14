@@ -19,7 +19,7 @@
 	 %>
 
 <div style="width:100%;text-align:center">
-<form name="input" action="registerDeal" method="post" align="center">
+<form name="input" action="registerDeal" method="post" >
  username: <input type="text" name="userName"/>
  <br />
  password: <input type="password" name="password"/>

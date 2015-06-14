@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-<h2 align="center">Borrow Book</h2>
+<h2 align="center">Return Book</h2>
 <div style="width:100%;text-align:center ">
   <form action="returnDeal">
   <table border="1" align="center"> 

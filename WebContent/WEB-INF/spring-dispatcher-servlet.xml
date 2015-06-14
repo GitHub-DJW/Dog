@@ -15,15 +15,6 @@
 
 <mvc:annotation-driven/>
 
- <!--不使用映射  
-<bean id="HandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
-
-<bean name="/" class="com.gontuseries.hellocontroller.HelloController"/>
-
-<bean name="/login.html" class="com.gontuseries.hellocontroller.LoginController"/>
--->
-
-
 <bean id="viewResolver"
       class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       <property name="prefix">

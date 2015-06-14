@@ -30,6 +30,7 @@ public class RegisterController {
 	public ModelAndView registerDeal(HttpServletRequest request,
 			HttpServletResponse response) {
 	    try {
+	    request.setCharacterEncoding("UTF-8");
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 		String confirmPassword = request.getParameter("confirmPassword");

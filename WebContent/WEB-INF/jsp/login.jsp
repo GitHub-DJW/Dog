@@ -36,7 +36,5 @@
 <a href="loginStaff.html">Click here to login </a>
 </div>
 
-
-
 </body>
 </html>
